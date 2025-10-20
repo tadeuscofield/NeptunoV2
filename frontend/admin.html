@@ -335,6 +335,10 @@
             <p class="text-lg font-mono font-bold text-blue-600">${trial.access_code}</p>
           </div>
 
+          <button onclick="sendWelcomeEmail('${trial.email}', '${trial.name}', '${trial.access_code}')" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition font-bold shadow-lg">
+            📧 Enviar Email de Boas-Vindas
+          </button>
+
           <button onclick="extendTrial(${trialId}, 24)" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
             ⏰ Estender +24h
           </button>
@@ -432,6 +436,61 @@
       } catch (error) {
         alert('Erro: ' + error.message);
       }
+    }
+
+    // Send Welcome Email (opens default email client)
+    function sendWelcomeEmail(email, name, code) {
+      const subject = encodeURIComponent('🔱 Seu código de acesso NEPTUNO - Trial 72h');
+
+      const firstName = name.split(' ')[0];
+
+      const body = encodeURIComponent(`Olá ${firstName},
+
+Obrigado pelo interesse no NEPTUNO!
+
+Seu código de acesso trial foi gerado:
+
+━━━━━━━━━━━━━━━━━━━━━━
+   ${code}
+━━━━━━━━━━━━━━━━━━━━━━
+
+Válido por: 72 horas a partir da ativação
+
+Como acessar:
+1. Acesse: www.neptunodescom.com
+2. Clique no botão "Acessar Sistema" (canto superior direito)
+3. Insira o código acima
+4. Pronto! Explore todas as funcionalidades
+
+Seu trial de 72h começa quando você inserir o código pela primeira vez.
+
+Funcionalidades incluídas:
+✅ Interface guiada em 8 passos (ANP 817/2020)
+✅ Cálculo inteligente de custos com Machine Learning
+✅ Geração automática de relatórios PDF profissionais
+✅ Banco de dados PostgreSQL para histórico
+✅ 100% LGPD Compliant
+
+Precisa de ajuda? Responda este email ou acesse nosso suporte!
+
+Atenciosamente,
+Eng. Tadeu Santana
+NEPTUNO - Offshore Decommissioning
+
+━━━━━━━━━━━━━━━━━━━━━━
+📧 contato@neptunodescom.com
+🌐 www.neptunodescom.com
+🔒 Sistema 100% LGPD Compliant
+━━━━━━━━━━━━━━━━━━━━━━`);
+
+      const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+
+      window.open(mailtoLink, '_blank');
+
+      // Show success message
+      alert(`📧 Email preparado para ${email}\n\nSeu cliente de email padrão foi aberto.\nRevise e envie!`);
+
+      closeModal();
     }
   </script>
 
