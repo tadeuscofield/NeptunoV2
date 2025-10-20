@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEPTUNO - Painel Admin</title>
+  <link rel="icon" type="image/png" href="./branding/NEPTUNO_LOGO.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    }
+    .status-badge {
+      @apply px-3 py-1 rounded-full text-xs font-bold;
+    }
+    .status-PENDING { @apply bg-yellow-100 text-yellow-800; }
+    .status-ACTIVE { @apply bg-green-100 text-green-800; }
+    .status-EXPIRED { @apply bg-red-100 text-red-800; }
+    .status-CONVERTED { @apply bg-blue-100 text-blue-800; }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Login Screen -->
+  <div id="loginScreen" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-blue-700">
+    <div class="bg-white p-10 rounded-2xl shadow-2xl max-w-md w-full">
+      <div class="text-center mb-8">
+        <img src="./branding/NEPTUNO_LOGO.png" alt="NEPTUNO" class="h-16 mx-auto mb-4">
+        <h1 class="text-3xl font-bold text-gray-900">Painel Admin</h1>
+        <p class="text-gray-600">Gerenciamento de Trials</p>
+      </div>
+
+      <form id="loginForm" class="space-y-6">
+        <div>
+          <label class="block text-sm font-bold text-gray-700 mb-2">Chave de Admin</label>
+          <input
+            type="password"
+            id="adminKey"
+            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            placeholder="Digite a chave de administrador"
+            required
+          >
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition"
+        >
+          🔐 Acessar Painel
+        </button>
+
+        <p class="text-xs text-gray-500 text-center">
+          Acesso restrito. Entre em contato com o desenvolvedor para obter a chave.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div id="adminDashboard" class="hidden">
+    <!-- Header -->
+    <nav class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center space-x-4">
+            <img src="./branding/NEPTUNO_LOGO.png" alt="NEPTUNO" class="h-10">
+            <h1 class="text-xl font-bold text-gray-900">Painel Admin</h1>
+          </div>
+          <div class="flex items-center space-x-4">
+            <span class="text-sm text-gray-600" id="adminEmail">Admin</span>
+            <button onclick="logout()" class="text-sm text-red-600 hover:text-red-800">Sair</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Stats Cards -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600">Total Trials</p>
+              <p class="text-3xl font-bold text-gray-900" id="totalTrials">0</p>
+            </div>
+            <div class="text-4xl">📊</div>
+          </div>
+        </div>
+
+        <div class="bg-green-50 p-6 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-green-700">Ativos</p>
+              <p class="text-3xl font-bold text-green-900" id="activeTrials">0</p>
+            </div>
+            <div class="text-4xl">✅</div>
+          </div>
+        </div>
+
+        <div class="bg-yellow-50 p-6 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-yellow-700">Pendentes</p>
+              <p class="text-3xl font-bold text-yellow-900" id="pendingTrials">0</p>
+            </div>
+            <div class="text-4xl">⏳</div>
+          </div>
+        </div>
+
+        <div class="bg-red-50 p-6 rounded-xl shadow">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-red-700">Expirados</p>
+              <p class="text-3xl font-bold text-red-900" id="expiredTrials">0</p>
+            </div>
+            <div class="text-4xl">⏰</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="bg-white p-4 rounded-xl shadow mb-6">
+        <div class="flex flex-wrap gap-4 items-center">
+          <button onclick="filterTrials('all')" class="filter-btn px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
+            Todos
+          </button>
+          <button onclick="filterTrials('PENDING')" class="filter-btn px-4 py-2 bg-yellow-100 text-yellow-800 rounded-lg hover:bg-yellow-200 transition">
+            Pendentes
+          </button>
+          <button onclick="filterTrials('ACTIVE')" class="filter-btn px-4 py-2 bg-green-100 text-green-800 rounded-lg hover:bg-green-200 transition">
+            Ativos
+          </button>
+          <button onclick="filterTrials('EXPIRED')" class="filter-btn px-4 py-2 bg-red-100 text-red-800 rounded-lg hover:bg-red-200 transition">
+            Expirados
+          </button>
+          <button onclick="filterTrials('CONVERTED')" class="filter-btn px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition">
+            Convertidos
+          </button>
+          <button onclick="loadTrials()" class="ml-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            🔄 Atualizar
+          </button>
+        </div>
+      </div>
+
+      <!-- Trials Table -->
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase">Nome</th>
+                <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase">Email</th>
+                <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase">Empresa</th>
+                <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase">Código</th>
+                <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase">Status</th>
+                <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase">Expira Em</th>
+                <th class="px-6 py-3 text-left text-xs font-bold text-gray-700 uppercase">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="trialsTableBody" class="bg-white divide-y divide-gray-200">
+              <tr>
+                <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+                  Carregando...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Ações -->
+  <div id="actionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-8 max-w-md w-full">
+      <h3 class="text-2xl font-bold mb-6" id="modalTitle">Ações</h3>
+      <div id="modalContent"></div>
+      <button onclick="closeModal()" class="mt-6 w-full bg-gray-300 text-gray-800 py-2 rounded-lg hover:bg-gray-400 transition">
+        Cancelar
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'https://aware-comfort-production.up.railway.app';
+    let adminKey = '';
+    let allTrials = [];
+    let currentFilter = 'all';
+
+    // Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      adminKey = document.getElementById('adminKey').value;
+
+      try {
+        const response = await fetch(`${API_URL}/api/admin/trials`, {
+          headers: {
+            'Authorization': `Bearer ${adminKey}`
+          }
+        });
+
+        if (response.ok) {
+          document.getElementById('loginScreen').classList.add('hidden');
+          document.getElementById('adminDashboard').classList.remove('hidden');
+          loadTrials();
+        } else {
+          alert('❌ Chave de admin inválida!');
+        }
+      } catch (error) {
+        alert('Erro ao conectar com servidor: ' + error.message);
+      }
+    });
+
+    // Logout
+    function logout() {
+      adminKey = '';
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('adminDashboard').classList.add('hidden');
+      document.getElementById('adminKey').value = '';
+    }
+
+    // Load Trials
+    async function loadTrials() {
+      try {
+        const response = await fetch(`${API_URL}/api/admin/trials`, {
+          headers: {
+            'Authorization': `Bearer ${adminKey}`
+          }
+        });
+
+        const data = await response.json();
+        allTrials = data.trials || [];
+        updateStats();
+        renderTrials();
+      } catch (error) {
+        console.error('Erro ao carregar trials:', error);
+      }
+    }
+
+    // Update Stats
+    function updateStats() {
+      const total = allTrials.length;
+      const active = allTrials.filter(t => t.status === 'ACTIVE').length;
+      const pending = allTrials.filter(t => t.status === 'PENDING').length;
+      const expired = allTrials.filter(t => t.status === 'EXPIRED').length;
+
+      document.getElementById('totalTrials').textContent = total;
+      document.getElementById('activeTrials').textContent = active;
+      document.getElementById('pendingTrials').textContent = pending;
+      document.getElementById('expiredTrials').textContent = expired;
+    }
+
+    // Filter Trials
+    function filterTrials(status) {
+      currentFilter = status;
+      renderTrials();
+    }
+
+    // Render Trials
+    function renderTrials() {
+      const tbody = document.getElementById('trialsTableBody');
+      let trials = allTrials;
+
+      if (currentFilter !== 'all') {
+        trials = allTrials.filter(t => t.status === currentFilter);
+      }
+
+      if (trials.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="px-6 py-8 text-center text-gray-500">
+              Nenhum trial encontrado
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = trials.map(trial => `
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="font-medium text-gray-900">${trial.name}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-600">${trial.email}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-600">${trial.company || '-'}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="font-mono text-sm font-bold text-blue-600">${trial.access_code}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="status-badge status-${trial.status}">${trial.status}</span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+            ${trial.expires_at ? formatDate(trial.expires_at) : 'Não ativado'}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm">
+            <button onclick="showActions(${trial.id})" class="text-blue-600 hover:text-blue-800 font-medium">
+              Ações ▼
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Format Date
+    function formatDate(isoString) {
+      const date = new Date(isoString);
+      const now = new Date();
+      const diff = date - now;
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+
+      if (hours < 0) return '❌ Expirado';
+      if (hours < 24) return `⏰ ${hours}h restantes`;
+      return date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
+    }
+
+    // Show Actions Modal
+    function showActions(trialId) {
+      const trial = allTrials.find(t => t.id === trialId);
+      if (!trial) return;
+
+      document.getElementById('modalTitle').textContent = `Ações - ${trial.name}`;
+      document.getElementById('modalContent').innerHTML = `
+        <div class="space-y-4">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <p class="text-sm font-bold text-gray-700">Email:</p>
+            <p class="text-sm text-gray-900">${trial.email}</p>
+          </div>
+
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <p class="text-sm font-bold text-gray-700">Código de Acesso:</p>
+            <p class="text-lg font-mono font-bold text-blue-600">${trial.access_code}</p>
+          </div>
+
+          <button onclick="sendWelcomeEmail('${trial.email}', '${trial.name}', '${trial.access_code}')" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition font-bold shadow-lg">
+            📧 Enviar Email de Boas-Vindas
+          </button>
+
+          <button onclick="extendTrial(${trialId}, 24)" class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition">
+            ⏰ Estender +24h
+          </button>
+
+          <button onclick="extendTrial(${trialId}, 72)" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">
+            ⏰ Estender +72h
+          </button>
+
+          <button onclick="convertTrial(${trialId})" class="w-full bg-purple-500 text-white py-2 rounded-lg hover:bg-purple-600 transition">
+            💳 Marcar como Convertido
+          </button>
+
+          <button onclick="deleteTrial(${trialId})" class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition">
+            🗑️ Deletar (LGPD)
+          </button>
+        </div>
+      `;
+      document.getElementById('actionModal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('actionModal').classList.add('hidden');
+    }
+
+    // Extend Trial
+    async function extendTrial(trialId, hours) {
+      try {
+        const response = await fetch(`${API_URL}/api/admin/trial/${trialId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${adminKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ extend_hours: hours })
+        });
+
+        if (response.ok) {
+          alert(`✅ Trial estendido por ${hours} horas!`);
+          closeModal();
+          loadTrials();
+        } else {
+          alert('❌ Erro ao estender trial');
+        }
+      } catch (error) {
+        alert('Erro: ' + error.message);
+      }
+    }
+
+    // Convert Trial
+    async function convertTrial(trialId) {
+      if (!confirm('Marcar este trial como CONVERTIDO (cliente pagante)?')) return;
+
+      try {
+        const response = await fetch(`${API_URL}/api/admin/trial/${trialId}`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${adminKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status: 'CONVERTED' })
+        });
+
+        if (response.ok) {
+          alert('✅ Trial marcado como CONVERTIDO!');
+          closeModal();
+          loadTrials();
+        } else {
+          alert('❌ Erro ao converter trial');
+        }
+      } catch (error) {
+        alert('Erro: ' + error.message);
+      }
+    }
+
+    // Delete Trial (LGPD)
+    async function deleteTrial(trialId) {
+      const trial = allTrials.find(t => t.id === trialId);
+      if (!confirm(`⚠️ ATENÇÃO!\n\nIsto irá DELETAR PERMANENTEMENTE todos os dados de:\n${trial.email}\n\nEsta ação é IRREVERSÍVEL (LGPD).\n\nConfirmar?`)) return;
+
+      try {
+        const response = await fetch(`${API_URL}/api/admin/trial/${trialId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${adminKey}`
+          }
+        });
+
+        if (response.ok) {
+          alert('🗑️ Dados deletados permanentemente (LGPD compliance)');
+          closeModal();
+          loadTrials();
+        } else {
+          alert('❌ Erro ao deletar trial');
+        }
+      } catch (error) {
+        alert('Erro: ' + error.message);
+      }
+    }
+
+    // Send Welcome Email (opens default email client)
+    function sendWelcomeEmail(email, name, code) {
+      const subject = encodeURIComponent('🔱 Seu código de acesso NEPTUNO - Trial 72h');
+
+      const firstName = name.split(' ')[0];
+
+      const body = encodeURIComponent(`Olá ${firstName},
+
+Obrigado pelo interesse no NEPTUNO!
+
+Seu código de acesso trial foi gerado:
+
+━━━━━━━━━━━━━━━━━━━━━━
+   ${code}
+━━━━━━━━━━━━━━━━━━━━━━
+
+Válido por: 72 horas a partir da ativação
+
+Como acessar:
+1. Acesse: www.neptunodescom.com
+2. Clique no botão "Acessar Sistema" (canto superior direito)
+3. Insira o código acima
+4. Pronto! Explore todas as funcionalidades
+
+Seu trial de 72h começa quando você inserir o código pela primeira vez.
+
+Funcionalidades incluídas:
+✅ Interface guiada em 8 passos (ANP 817/2020)
+✅ Cálculo inteligente de custos com Machine Learning
+✅ Geração automática de relatórios PDF profissionais
+✅ Banco de dados PostgreSQL para histórico
+✅ 100% LGPD Compliant
+
+Precisa de ajuda? Responda este email ou acesse nosso suporte!
+
+Atenciosamente,
+Eng. Tadeu Santana
+NEPTUNO - Offshore Decommissioning
+
+━━━━━━━━━━━━━━━━━━━━━━
+📧 contato@neptunodescom.com
+🌐 www.neptunodescom.com
+🔒 Sistema 100% LGPD Compliant
+━━━━━━━━━━━━━━━━━━━━━━`);
+
+      const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+
+      window.open(mailtoLink, '_blank');
+
+      // Show success message
+      alert(`📧 Email preparado para ${email}\n\nSeu cliente de email padrão foi aberto.\nRevise e envie!`);
+
+      closeModal();
+    }
+  </script>
+
+</body>
+</html>
