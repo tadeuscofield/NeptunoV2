@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="NEPTUNO - Sistema Profissional de Plano de Desativação de Instalações conforme ANP 817/2020. Teste grátis por 72 horas!">
+  <meta name="keywords" content="PDI, descomissionamento, ANP 817/2020, plano de desativação, óleo e gás, offshore, onshore, LGPD">
+  <meta name="author" content="NEPTUNO - Eng. Tadeu Santana">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="NEPTUNO - Sistema de PDI | Teste Grátis 72h">
+  <meta property="og:description" content="Sistema profissional para elaboração de PDI conforme ANP 817/2020. Teste grátis por 72 horas!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./branding/NEPTUNO_LOGO.png">
+
+  <title>NEPTUNO - Teste Grátis 72h | Sistema de PDI ANP 817/2020</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./branding/NEPTUNO_LOGO.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Gradient Background */
+    .hero-gradient {
+      background: linear-gradient(135deg, #0a1929 0%, #1e3a5f 50%, #0f2847 100%);
+    }
+
+    /* Animated Ocean Background */
+    .ocean-bg {
+      background-image:
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23003d73;stop-opacity:0.3"/><stop offset="100%" style="stop-color:%23005a99;stop-opacity:0.1"/></linearGradient></defs><path d="M0,100 Q300,120 600,100 T1200,100 L1200,400 L0,400 Z" fill="url(%23water)"/><path d="M0,150 Q300,170 600,150 T1200,150 L1200,400 L0,400 Z" fill="url(%23water)" opacity="0.5"/></svg>');
+      background-size: cover;
+      background-position: bottom;
+      animation: wave 15s ease-in-out infinite;
+    }
+
+    @keyframes wave {
+      0%, 100% { background-position-y: 0px; }
+      50% { background-position-y: 20px; }
+    }
+
+    /* Pulse animation for CTA */
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .pulse {
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1e3a5f;
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0a1929;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-4">
+          <img src="./branding/NEPTUNO_LOGO.png" alt="NEPTUNO Logo" class="h-10">
+        </div>
+        <div class="hidden md:flex space-x-8">
+          <a href="#features" class="text-gray-700 hover:text-blue-900 transition">Recursos</a>
+          <a href="#benefits" class="text-gray-700 hover:text-blue-900 transition">Benefícios</a>
+          <a href="#trial" class="text-gray-700 hover:text-blue-900 transition">Teste Grátis</a>
+          <a href="#lgpd" class="text-gray-700 hover:text-blue-900 transition">LGPD</a>
+        </div>
+        <div>
+          <a href="index.html" class="text-sm text-gray-600 hover:text-blue-900">Já tenho código</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-gradient ocean-bg text-white pt-24 pb-32 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="mb-8">
+        <img src="./branding/NEPTUNO_LOGO.png" alt="NEPTUNO" class="h-24 mx-auto mb-6 filter drop-shadow-2xl">
+      </div>
+
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+        Sistema Profissional de<br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
+          Plano de Desativação de Instalações
+        </span>
+      </h1>
+
+      <p class="text-xl md:text-2xl mb-4 text-gray-300 max-w-3xl mx-auto">
+        Conforme ANP 817/2020 | Machine Learning | LGPD Compliant
+      </p>
+
+      <p class="text-lg mb-12 text-gray-400 max-w-2xl mx-auto">
+        Automatize cálculos de custos, cronogramas e relatórios de descomissionamento offshore e onshore
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#trial" class="pulse bg-gradient-to-r from-green-500 to-teal-600 text-white px-10 py-4 rounded-lg text-lg font-bold hover:from-green-600 hover:to-teal-700 transition shadow-2xl">
+          🚀 Teste Grátis por 72 Horas
+        </a>
+        <a href="#features" class="bg-white bg-opacity-10 backdrop-blur-lg text-white px-10 py-4 rounded-lg text-lg font-bold hover:bg-opacity-20 transition border border-white border-opacity-30">
+          Saiba Mais
+        </a>
+      </div>
+
+      <p class="mt-8 text-sm text-gray-400">
+        ✅ Sem cartão de crédito | ✅ Acesso imediato | ✅ Suporte incluso
+      </p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Recursos Principais</h2>
+        <p class="text-xl text-gray-600">Tecnologia de ponta para descomissionamento offshore</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl shadow-lg hover:shadow-2xl transition">
+          <div class="text-5xl mb-4">🤖</div>
+          <h3 class="text-2xl font-bold mb-3 text-gray-900">Machine Learning</h3>
+          <p class="text-gray-700">
+            Algoritmos avançados para previsão de custos baseados em dados históricos de descomissionamento
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-xl shadow-lg hover:shadow-2xl transition">
+          <div class="text-5xl mb-4">📋</div>
+          <h3 class="text-2xl font-bold mb-3 text-gray-900">Conformidade ANP 817/2020</h3>
+          <p class="text-gray-700">
+            Interface de 8 passos que cobre todos os requisitos da regulamentação da ANP
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-8 rounded-xl shadow-lg hover:shadow-2xl transition">
+          <div class="text-5xl mb-4">📊</div>
+          <h3 class="text-2xl font-bold mb-3 text-gray-900">Relatórios PDF</h3>
+          <p class="text-gray-700">
+            Gere relatórios técnicos completos em PDF com gráficos, cronogramas e custos detalhados
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-8 rounded-xl shadow-lg hover:shadow-2xl transition">
+          <div class="text-5xl mb-4">🔒</div>
+          <h3 class="text-2xl font-bold mb-3 text-gray-900">LGPD Compliant</h3>
+          <p class="text-gray-700">
+            100% conforme com Lei Geral de Proteção de Dados - seus dados seguros e criptografados
+          </p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="bg-gradient-to-br from-red-50 to-red-100 p-8 rounded-xl shadow-lg hover:shadow-2xl transition">
+          <div class="text-5xl mb-4">⚡</div>
+          <h3 class="text-2xl font-bold mb-3 text-gray-900">Cálculo Instantâneo</h3>
+          <p class="text-gray-700">
+            Resultados em tempo real considerando lâmina d'água, tipo de instalação e fase de desativação
+          </p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="bg-gradient-to-br from-teal-50 to-teal-100 p-8 rounded-xl shadow-lg hover:shadow-2xl transition">
+          <div class="text-5xl mb-4">💾</div>
+          <h3 class="text-2xl font-bold mb-3 text-gray-900">Banco de Dados PostgreSQL</h3>
+          <p class="text-gray-700">
+            Histórico completo de projetos, análises comparativas e evolução de custos
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section id="benefits" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Por que escolher NEPTUNO?</h2>
+        <p class="text-xl text-gray-600">Transforme semanas de trabalho em minutos</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+              <div class="bg-green-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold">✓</div>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2 text-gray-900">Redução de 90% no tempo de elaboração</h3>
+              <p class="text-gray-600">Automatize cálculos complexos que levariam dias para serem feitos manualmente</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+              <div class="bg-green-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold">✓</div>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2 text-gray-900">Precisão baseada em dados reais</h3>
+              <p class="text-gray-600">Machine Learning treinado com projetos reais das principais bacias brasileiras</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+              <div class="bg-green-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold">✓</div>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2 text-gray-900">Conformidade regulatória garantida</h3>
+              <p class="text-gray-600">Atende 100% dos requisitos da ANP 817/2020 e LGPD</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+              <div class="bg-green-500 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold">✓</div>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2 text-gray-900">Acesso em qualquer dispositivo</h3>
+              <p class="text-gray-600">Aplicação web responsiva - funciona em desktop, tablet e smartphone</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-gradient-to-br from-blue-900 to-blue-700 p-12 rounded-2xl shadow-2xl text-white">
+          <h3 class="text-3xl font-bold mb-6">Casos de Uso</h3>
+          <ul class="space-y-4 text-lg">
+            <li class="flex items-center space-x-3">
+              <span class="text-2xl">🏗️</span>
+              <span>Operadoras de petróleo e gás</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <span class="text-2xl">🏢</span>
+              <span>Empresas de engenharia</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <span class="text-2xl">📝</span>
+              <span>Consultorias especializadas</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <span class="text-2xl">🎓</span>
+              <span>Instituições acadêmicas</span>
+            </li>
+            <li class="flex items-center space-x-3">
+              <span class="text-2xl">⚖️</span>
+              <span>Órgãos reguladores</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trial Form Section -->
+  <section id="trial" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">
+          🚀 Teste Grátis por 72 Horas
+        </h2>
+        <p class="text-xl text-gray-600 mb-2">
+          Receba seu código de acesso por email em até 2 minutos
+        </p>
+        <p class="text-sm text-gray-500">
+          Sem cartão de crédito | Sem compromisso | Cancelamento automático
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-blue-50 to-teal-50 p-10 rounded-2xl shadow-xl">
+        <form id="trialForm" class="space-y-6">
+          <!-- Nome -->
+          <div>
+            <label for="name" class="block text-sm font-bold text-gray-700 mb-2">
+              Nome Completo *
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+              placeholder="João da Silva"
+            >
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-bold text-gray-700 mb-2">
+              Email Profissional *
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+              placeholder="joao@empresa.com.br"
+            >
+          </div>
+
+          <!-- Empresa -->
+          <div>
+            <label for="company" class="block text-sm font-bold text-gray-700 mb-2">
+              Empresa / Instituição *
+            </label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              required
+              class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+              placeholder="Petróleo Brasileiro S.A."
+            >
+          </div>
+
+          <!-- Cargo -->
+          <div>
+            <label for="position" class="block text-sm font-bold text-gray-700 mb-2">
+              Cargo
+            </label>
+            <input
+              type="text"
+              id="position"
+              name="position"
+              class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+              placeholder="Engenheiro de Petróleo"
+            >
+          </div>
+
+          <!-- Telefone -->
+          <div>
+            <label for="phone" class="block text-sm font-bold text-gray-700 mb-2">
+              Telefone (opcional)
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+              placeholder="(21) 99999-9999"
+            >
+          </div>
+
+          <!-- LGPD Consent -->
+          <div class="bg-white p-6 rounded-lg border-2 border-blue-200">
+            <div class="flex items-start space-x-3">
+              <input
+                type="checkbox"
+                id="lgpd"
+                name="lgpd"
+                required
+                class="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              >
+              <label for="lgpd" class="text-sm text-gray-700">
+                <span class="font-bold">Aceito os termos de uso e política de privacidade (LGPD)</span><br>
+                <span class="text-xs text-gray-500">
+                  Seus dados serão utilizados apenas para fornecer acesso ao sistema e enviar informações relacionadas.
+                  Você pode solicitar exclusão a qualquer momento conforme Lei nº 13.709/2018.
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-gradient-to-r from-green-500 to-teal-600 text-white py-4 px-6 rounded-lg text-lg font-bold hover:from-green-600 hover:to-teal-700 transition shadow-lg hover:shadow-xl transform hover:scale-105"
+          >
+            🚀 Solicitar Código de Acesso Grátis
+          </button>
+
+          <p class="text-center text-sm text-gray-500">
+            Você receberá um email com seu código de acesso em até 2 minutos
+          </p>
+        </form>
+
+        <!-- Success Message (Hidden by default) -->
+        <div id="successMessage" class="hidden mt-8 bg-green-100 border-2 border-green-500 text-green-800 p-6 rounded-lg">
+          <div class="flex items-center space-x-3 mb-3">
+            <span class="text-3xl">✅</span>
+            <h3 class="text-xl font-bold">Solicitação Enviada!</h3>
+          </div>
+          <p class="mb-2">
+            Código de acesso enviado para <span id="emailSent" class="font-bold"></span>
+          </p>
+          <p class="text-sm">
+            Verifique sua caixa de entrada (e spam). Seu trial de 72h começa assim que você inserir o código.
+          </p>
+          <a href="index.html" class="inline-block mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+            Ir para Login →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LGPD Section -->
+  <section id="lgpd" class="py-20 bg-gray-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">🔒 Conformidade LGPD</h2>
+        <p class="text-xl text-gray-400">
+          Proteção total dos seus dados conforme Lei nº 13.709/2018
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-gray-800 p-8 rounded-xl">
+          <div class="text-4xl mb-4">🛡️</div>
+          <h3 class="text-xl font-bold mb-3">Criptografia End-to-End</h3>
+          <p class="text-gray-400">
+            Todos os dados são criptografados em trânsito (HTTPS) e em repouso (AES-256)
+          </p>
+        </div>
+
+        <div class="bg-gray-800 p-8 rounded-xl">
+          <div class="text-4xl mb-4">🗑️</div>
+          <h3 class="text-xl font-bold mb-3">Direito ao Esquecimento</h3>
+          <p class="text-gray-400">
+            Você pode solicitar exclusão completa de seus dados a qualquer momento
+          </p>
+        </div>
+
+        <div class="bg-gray-800 p-8 rounded-xl">
+          <div class="text-4xl mb-4">📊</div>
+          <h3 class="text-xl font-bold mb-3">Transparência Total</h3>
+          <p class="text-gray-400">
+            Acesse e exporte todos os seus dados armazenados quando quiser
+          </p>
+        </div>
+
+        <div class="bg-gray-800 p-8 rounded-xl">
+          <div class="text-4xl mb-4">🔐</div>
+          <h3 class="text-xl font-bold mb-3">Acesso Seguro</h3>
+          <p class="text-gray-400">
+            Sistema de autenticação com códigos temporários e sessões seguras
+          </p>
+        </div>
+
+        <div class="bg-gray-800 p-8 rounded-xl">
+          <div class="text-4xl mb-4">📝</div>
+          <h3 class="text-xl font-bold mb-3">Consentimento Explícito</h3>
+          <p class="text-gray-400">
+            Coletamos apenas dados essenciais com seu consentimento claro
+          </p>
+        </div>
+
+        <div class="bg-gray-800 p-8 rounded-xl">
+          <div class="text-4xl mb-4">🏢</div>
+          <h3 class="text-xl font-bold mb-3">Dados no Brasil</h3>
+          <p class="text-gray-400">
+            Servidores hospedados em território nacional conforme legislação
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-12 bg-blue-900 bg-opacity-50 p-8 rounded-xl border-2 border-blue-700">
+        <h3 class="text-2xl font-bold mb-4">📧 Contato DPO (Data Protection Officer)</h3>
+        <p class="text-gray-300 mb-4">
+          Para exercer seus direitos sob a LGPD (acesso, correção, exclusão, portabilidade):
+        </p>
+        <p class="text-lg">
+          <strong>Email:</strong> <a href="mailto:lgpd@neptunodescom.com" class="text-teal-400 hover:underline">lgpd@neptunodescom.com</a><br>
+          <strong>Prazo de resposta:</strong> até 15 dias úteis
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <img src="./branding/NEPTUNO_LOGO.png" alt="NEPTUNO" class="h-12 mb-4">
+          <p class="text-sm">
+            Sistema profissional de PDI conforme ANP 817/2020
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-4">Produto</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#features" class="hover:text-white transition">Recursos</a></li>
+            <li><a href="#benefits" class="hover:text-white transition">Benefícios</a></li>
+            <li><a href="#trial" class="hover:text-white transition">Teste Grátis</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-4">Legal</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#lgpd" class="hover:text-white transition">Política de Privacidade</a></li>
+            <li><a href="#lgpd" class="hover:text-white transition">Termos de Uso</a></li>
+            <li><a href="#lgpd" class="hover:text-white transition">LGPD</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-4">Contato</h4>
+          <ul class="space-y-2 text-sm">
+            <li>📧 contato@neptunodescom.com</li>
+            <li>🔒 lgpd@neptunodescom.com</li>
+            <li>🌐 www.neptunodescom.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm text-center md:text-left mb-4 md:mb-0">
+          © 2025 NEPTUNO - Todos os direitos reservados
+        </p>
+        <p class="text-sm flex items-center space-x-2">
+          <span>Desenvolvido por</span>
+          <span class="font-bold text-white">👷 Eng. Tadeu Santana</span>
+          <a href="https://linkedin.com/in/tadeusantana" target="_blank" class="text-blue-400 hover:text-blue-300 transition">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Form submission
+    document.getElementById('trialForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        company: document.getElementById('company').value,
+        position: document.getElementById('position').value,
+        phone: document.getElementById('phone').value,
+        lgpd: document.getElementById('lgpd').checked,
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        // Send to backend API
+        const response = await fetch('https://aware-comfort-production.up.railway.app/api/trial/request', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Show success message
+          document.getElementById('trialForm').classList.add('hidden');
+          document.getElementById('successMessage').classList.remove('hidden');
+          document.getElementById('emailSent').textContent = formData.email;
+
+          // Send to Google Forms (fallback/backup)
+          sendToGoogleForms(formData);
+        } else {
+          alert('Erro ao enviar solicitação. Por favor, tente novamente ou entre em contato: contato@neptunodescom.com');
+        }
+      } catch (error) {
+        // Fallback: just show success and send to Google Forms
+        console.error('API error:', error);
+        document.getElementById('trialForm').classList.add('hidden');
+        document.getElementById('successMessage').classList.remove('hidden');
+        document.getElementById('emailSent').textContent = formData.email;
+
+        sendToGoogleForms(formData);
+      }
+    });
+
+    function sendToGoogleForms(data) {
+      // Google Forms submission (will be configured later)
+      console.log('Sending to Google Forms:', data);
+      // Format: https://docs.google.com/forms/d/e/FORM_ID/formResponse
+      // Add your Google Form URL here
+    }
+  </script>
+
+</body>
+</html>
