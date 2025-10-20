@@ -4,41 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="NEPTUNO - Sistema Profissional de Plano de Desativação de Instalações conforme ANP 817/2020. Cálculo automático de custos, cronogramas e exportação para PDF.">
-  <meta name="keywords" content="PDI, descomissionamento, ANP 817/2020, plano de desativação, óleo e gás, offshore, onshore">
-  <meta name="author" content="NEPTUNO">
-  <meta name="robots" content="index, follow">
+  <title>NEPTUNO - Sistema Profissional de PDI | Teste Grátis 72h</title>
+  <meta name="description" content="Sistema inteligente para Plano de Desativação de Instalações offshore. Conforme ANP 817/2020, Machine Learning e LGPD compliant. Teste grátis por 72 horas!">
 
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:title" content="NEPTUNO - Sistema de Plano de Desativação de Instalações">
-  <meta property="og:description" content="Sistema profissional para elaboração de PDI conforme ANP 817/2020 com cálculo automático de custos e cronogramas.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="./branding/NEPTUNO_LOGO.png">
+  <link rel="icon" type="image/png" href="NEPTUNO_LOGO.png">
 
-  <title>NEPTUNO - Plano de Desativação de Instalações</title>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="./branding/NEPTUNO_LOGO.png">
-
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- React 18 and ReactDOM from CDN -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-
-  <!-- Babel Standalone for JSX transformation -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <!-- jsPDF for PDF generation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-
-  <!-- Chart.js for graphics -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
     * {
       margin: 0;
       padding: 0;
@@ -46,525 +21,679 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      background-color: #f8fafc;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
     }
 
-    /* Loading Screen */
-    .loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #0a1929 0%, #1e3a5f 50%, #0f2847 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      color: white;
-      transition: opacity 0.5s ease;
+    /* Hero Ocean Animation */
+    .ocean {
+      height: 100vh;
+      background: linear-gradient(180deg, #0a1929 0%, #1a365d 50%, #2c5282 100%);
+      position: relative;
       overflow: hidden;
     }
 
-    .loading-screen::before {
-      content: '';
+    .wave {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
       bottom: 0;
-      background-image:
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23001e3c;stop-opacity:1"/><stop offset="100%" style="stop-color:%23003d73;stop-opacity:1"/></linearGradient></defs><rect fill="url(%23water)" width="1200" height="400" y="200"/><ellipse cx="600" cy="200" rx="800" ry="40" fill="%23004d80" opacity="0.3"/><ellipse cx="600" cy="200" rx="600" ry="30" fill="%23005a99" opacity="0.2"/><g transform="translate(500, 50)"><rect x="0" y="50" width="200" height="120" fill="%23e63946" stroke="%23d62828" stroke-width="2"/><rect x="20" y="20" width="160" height="30" fill="%23ffb703"/><rect x="40" y="70" width="40" height="100" fill="%23606c38"/><rect x="120" y="70" width="40" height="100" fill="%23606c38"/><rect x="80" y="80" width="40" height="90" fill="%23283618"/><circle cx="100" cy="30" r="8" fill="%23fb8500"/><line x1="100" y1="170" x2="100" y2="240" stroke="%23606c38" stroke-width="8"/><line x1="60" y1="170" x2="40" y2="240" stroke="%23606c38" stroke-width="6"/><line x1="140" y1="170" x2="160" y2="240" stroke="%23606c38" stroke-width="6"/><path d="M 20 170 L 0 250 L 200 250 L 180 170 Z" fill="%23003d73" opacity="0.4"/><rect x="85" y="100" width="30" height="30" fill="%23f77f00"/><rect x="90" y="105" width="20" height="20" fill="%23fcbf49"/></g></svg>');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.15;
-      animation: float 20s ease-in-out infinite;
+      left: 0;
+      width: 200%;
+      height: 200px;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z" fill="%23ffffff" opacity="0.1"/></svg>') repeat-x;
+      animation: wave-animation 15s linear infinite;
     }
 
+    .wave:nth-child(2) {
+      bottom: 10px;
+      animation: wave-animation 10s linear infinite;
+      opacity: 0.5;
+    }
+
+    @keyframes wave-animation {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Floating Animation */
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-20px); }
     }
 
-    .loading-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      background: rgba(0, 0, 0, 0.3);
-      padding: 60px 80px;
-      border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .float {
+      animation: float 6s ease-in-out infinite;
     }
 
-    .loading-logo {
-      font-size: 80px;
-      margin-bottom: 24px;
-      animation: pulse 2s ease-in-out infinite;
+    /* Gradient Text */
+    .gradient-text {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #ea580c 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .loading-title {
-      font-size: 42px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      letter-spacing: 2px;
+    /* Pulse Animation */
+    @keyframes pulse-slow {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
     }
 
-    .loading-subtitle {
-      font-size: 18px;
-      opacity: 0.9;
-      margin-bottom: 48px;
-      font-weight: 300;
+    .pulse-slow {
+      animation: pulse-slow 3s ease-in-out infinite;
     }
 
-    .loading-spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s linear infinite;
-    }
-
-    .loading-version {
+    /* Scroll Indicator */
+    .scroll-indicator {
       position: absolute;
-      bottom: 40px;
-      font-size: 14px;
-      opacity: 0.7;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+      40% { transform: translateY(-20px) translateX(-50%); }
+      60% { transform: translateY(-10px) translateX(-50%); }
     }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-
-    /* Scrollbar customization */
+    /* Custom Scrollbar */
     ::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
+      width: 12px;
     }
 
     ::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: #1e3a5f;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 5px;
+      background: #f59e0b;
+      border-radius: 6px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: #555;
-    }
-
-    /* Print styles */
-    @media print {
-      .no-print {
-        display: none !important;
-      }
-    }
-
-    /* Disclaimer Modal */
-    .disclaimer-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.75);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      padding: 20px;
-    }
-
-    .disclaimer-content {
-      background: white;
-      border-radius: 12px;
-      max-width: 700px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 32px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    }
-
-    .disclaimer-content h2 {
-      color: #dc2626;
-      font-size: 24px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .disclaimer-content h3 {
-      color: #1f2937;
-      font-size: 16px;
-      font-weight: 600;
-      margin-top: 20px;
-      margin-bottom: 10px;
-    }
-
-    .disclaimer-content ul {
-      margin-left: 20px;
-      margin-bottom: 16px;
-      line-height: 1.7;
-    }
-
-    .disclaimer-content li {
-      margin-bottom: 8px;
-    }
-
-    .disclaimer-checkbox {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 24px 0;
-      padding: 16px;
-      background: #fef3c7;
-      border-radius: 8px;
-      border: 2px solid #f59e0b;
-    }
-
-    .disclaimer-checkbox input {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
-
-    .disclaimer-checkbox label {
-      font-weight: 600;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .disclaimer-button {
-      width: 100%;
-      padding: 14px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .disclaimer-button:hover:not(:disabled) {
-      background: #1d4ed8;
-    }
-
-    .disclaimer-button:disabled {
-      background: #9ca3af;
-      cursor: not-allowed;
-    }
-
-    /* WhatsApp Floating Button */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: #25d366;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-      cursor: pointer;
-      z-index: 1000;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
-    }
-
-    .whatsapp-float svg {
-      width: 35px;
-      height: 35px;
-      fill: white;
-    }
-
-    .whatsapp-tooltip {
-      position: absolute;
-      right: 70px;
-      background: #1f2937;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 6px;
-      white-space: nowrap;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      font-size: 14px;
-    }
-
-    .whatsapp-float:hover .whatsapp-tooltip {
-      opacity: 1;
+      background: #fbbf24;
     }
   </style>
 </head>
 <body>
-  <noscript>
-    <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
-      <h1>JavaScript Necessário</h1>
-      <p>Esta aplicação requer JavaScript para funcionar corretamente.</p>
-      <p>Por favor, habilite o JavaScript no seu navegador e recarregue a página.</p>
-    </div>
-  </noscript>
 
-  <!-- Loading Screen -->
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-content">
-      <img src="./branding/NEPTUNO_LOGO.png" alt="NEPTUNO Logo" style="max-width: 400px; margin-bottom: 30px; filter: brightness(1.2);">
-      <div style="font-size: 14px; opacity: 0.8; margin-bottom: 24px;">
-        Sistema Profissional de Plano de Desativação de Instalações
+  <!-- Navigation -->
+  <nav class="fixed w-full top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <div class="flex items-center space-x-3">
+          <img src="NEPTUNO_LOGO.png" alt="NEPTUNO" class="h-12">
+        </div>
+
+        <div class="hidden md:flex space-x-8">
+          <a href="#solucao" class="text-gray-700 hover:text-blue-900 font-medium transition">Solução</a>
+          <a href="#funcionalidades" class="text-gray-700 hover:text-blue-900 font-medium transition">Funcionalidades</a>
+          <a href="#lgpd" class="text-gray-700 hover:text-blue-900 font-medium transition">LGPD</a>
+          <a href="#trial" class="text-gray-700 hover:text-blue-900 font-medium transition">Teste Grátis</a>
+        </div>
+
+        <a href="https://www.neptunodescom.com" class="bg-blue-900 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-800 transition shadow-lg">
+          Acessar Sistema →
+        </a>
       </div>
-      <div class="loading-spinner"></div>
     </div>
-    <div class="loading-version">Versão 2.1 | Machine Learning + ANP 817/2020</div>
-  </div>
+  </nav>
 
-  <!-- App Root -->
-  <div id="root"></div>
+  <!-- Hero Section -->
+  <section class="ocean relative">
+    <div class="wave"></div>
+    <div class="wave"></div>
 
-  <!-- Remove loading screen when app loads -->
-  <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-          loadingScreen.style.opacity = '0';
-          setTimeout(function() {
-            loadingScreen.style.display = 'none';
-          }, 500);
-        }
-      }, 1500);
-    });
-  </script>
+    <div class="relative z-10 h-full flex items-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
 
-  <!-- PDI Calculations Module -->
-  <script src="./PDICalculos.js"></script>
+        <div class="float mb-8">
+          <img src="NEPTUNO_LOGO.png" alt="NEPTUNO" class="h-32 mx-auto filter brightness-0 invert drop-shadow-2xl">
+        </div>
 
-  <!-- PDI Machine Learning Module -->
-  <script src="./PDICalculosML.js"></script>
+        <h1 class="text-6xl md:text-7xl font-black mb-6 leading-tight">
+          Sistema Profissional de<br>
+          <span class="gradient-text">Plano de Desativação</span><br>
+          de Instalações
+        </h1>
 
-  <!-- Main PDI Component -->
-  <script type="text/babel" src="./PDIComponent.jsx"></script>
+        <p class="text-2xl md:text-3xl font-light mb-4 text-blue-100">
+          Conforme ANP 817/2020 | Machine Learning | LGPD Compliant
+        </p>
 
-  <!-- App Entry Point -->
-  <script type="text/babel">
-    const { useState, useEffect } = React;
+        <p class="text-xl mb-12 text-blue-200 max-w-3xl mx-auto">
+          Reduza de <strong>6 semanas para 2 horas</strong> a elaboração do seu PDI offshore
+        </p>
 
-    // PDIComponent já está disponível
-    const PDIComponent = window.PDIComponent;
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <a href="#trial" class="pulse-slow bg-gradient-to-r from-yellow-500 via-orange-500 to-orange-600 text-white px-12 py-5 rounded-xl text-xl font-black hover:from-yellow-600 hover:to-orange-700 transition shadow-2xl transform hover:scale-105">
+            🚀 Teste Grátis 72 Horas
+          </a>
 
-    function App() {
-      const [darkMode, setDarkMode] = useState(false);
-      const [showDisclaimer, setShowDisclaimer] = useState(false);
-      const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
+          <a href="#solucao" class="bg-white/10 backdrop-blur-lg text-white border-2 border-white/30 px-12 py-5 rounded-xl text-xl font-bold hover:bg-white/20 transition">
+            Saiba Mais ↓
+          </a>
+        </div>
 
-      // Load preferences
-      useEffect(() => {
-        const savedDarkMode = localStorage.getItem('neptuno_darkMode');
-        if (savedDarkMode !== null) {
-          setDarkMode(JSON.parse(savedDarkMode));
-        }
+        <div class="mt-12 flex justify-center space-x-8 text-sm text-blue-200">
+          <div class="flex items-center space-x-2">
+            <svg class="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Sem cartão</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <svg class="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Acesso imediato</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <svg class="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>100% LGPD</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        const accepted = localStorage.getItem('neptuno_disclaimer_accepted');
-        if (!accepted) {
-          setShowDisclaimer(true);
-        }
-      }, []);
+    <div class="scroll-indicator">
+      <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+      </svg>
+    </div>
+  </section>
 
-      // Save dark mode preference
-      useEffect(() => {
-        localStorage.setItem('neptuno_darkMode', JSON.stringify(darkMode));
-        if (darkMode) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-      }, [darkMode]);
+  <!-- Stats Section -->
+  <section class="bg-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-5xl font-black text-blue-900 mb-2">90%</div>
+          <div class="text-gray-600 font-medium">Redução de Tempo</div>
+        </div>
+        <div>
+          <div class="text-5xl font-black text-blue-900 mb-2">85%</div>
+          <div class="text-gray-600 font-medium">Precisão ML</div>
+        </div>
+        <div>
+          <div class="text-5xl font-black text-blue-900 mb-2">100%</div>
+          <div class="text-gray-600 font-medium">ANP 817/2020</div>
+        </div>
+        <div>
+          <div class="text-5xl font-black text-blue-900 mb-2">100%</div>
+          <div class="text-gray-600 font-medium">LGPD</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      const handleAcceptDisclaimer = () => {
-        if (disclaimerAccepted) {
-          localStorage.setItem('neptuno_disclaimer_accepted', 'true');
-          setShowDisclaimer(false);
-        }
-      };
+  <!-- Solution Section -->
+  <section id="solucao" class="bg-gradient-to-br from-gray-50 to-blue-50 py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-5xl font-black text-gray-900 mb-6">O Problema</h2>
+        <p class="text-2xl text-gray-600 max-w-3xl mx-auto">
+          Elaborar PDI manualmente é lento, caro e arriscado
+        </p>
+      </div>
 
-      return (
-        <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gray-50'}`}>
-          {/* Disclaimer Modal */}
-          {showDisclaimer && (
-            <div className="disclaimer-modal">
-              <div className="disclaimer-content">
-                <h2>
-                  <span>⚠️</span>
-                  TERMOS DE USO - NEPTUNO
-                </h2>
+      <div class="grid md:grid-cols-2 gap-12 mb-16">
+        <!-- Problema -->
+        <div class="bg-red-50 border-4 border-red-200 p-10 rounded-2xl">
+          <h3 class="text-3xl font-bold text-red-900 mb-6">❌ Forma Tradicional</h3>
+          <ul class="space-y-4 text-lg text-red-800">
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">⏱️</span>
+              <span><strong>4-6 semanas</strong> de trabalho manual</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">💰</span>
+              <span><strong>R$ 50-150k</strong> em consultoria</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">⚠️</span>
+              <span>Risco de <strong>não-conformidade</strong> ANP</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">📊</span>
+              <span>Estimativas <strong>imprecisas</strong> de custos</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">🔴</span>
+              <span>Multas de até <strong>R$ 50 milhões</strong></span>
+            </li>
+          </ul>
+        </div>
 
-                <h3>1. NATUREZA DO SISTEMA</h3>
-                <p>O NEPTUNO é uma <strong>FERRAMENTA DE AUXÍLIO</strong> para elaboração de Plano de Desativação de Instalações conforme ANP 817/2020.</p>
+        <!-- Solução -->
+        <div class="bg-green-50 border-4 border-green-200 p-10 rounded-2xl">
+          <h3 class="text-3xl font-bold text-green-900 mb-6">✅ Com NEPTUNO</h3>
+          <ul class="space-y-4 text-lg text-green-800">
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">⚡</span>
+              <span><strong>2 horas</strong> para PDI completo</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">💵</span>
+              <span><strong>R$ 990/mês</strong> assinatura</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">✅</span>
+              <span><strong>100% conforme</strong> ANP 817/2020</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">🤖</span>
+              <span><strong>85% precisão</strong> com Machine Learning</span>
+            </li>
+            <li class="flex items-start space-x-3">
+              <span class="text-2xl">🟢</span>
+              <span><strong>Zero risco</strong> regulatório</span>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-                <h3>2. LIMITAÇÕES</h3>
-                <ul>
-                  <li>❌ <strong>NÃO substitui</strong> consultoria especializada</li>
-                  <li>❌ <strong>NÃO garante</strong> aprovação pela ANP</li>
-                  <li>❌ Cálculos são <strong>ESTIMATIVAS</strong> baseadas em benchmarks públicos</li>
-                  <li>❌ Usuário deve <strong>validar todos os dados</strong></li>
-                </ul>
+      <div class="text-center">
+        <div class="inline-block bg-yellow-100 border-4 border-yellow-400 px-12 py-6 rounded-2xl">
+          <p class="text-3xl font-black text-yellow-900">
+            ROI em apenas <span class="text-orange-600">1 projeto</span> 🎯
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                <h3>3. RESPONSABILIDADES</h3>
-                <ul>
-                  <li>✅ Responsabilidade técnica é do <strong>ENGENHEIRO ASSINANTE</strong></li>
-                  <li>✅ <strong>ART</strong> (Anotação de Responsabilidade Técnica) é <strong>obrigatória</strong></li>
-                  <li>✅ Validação final deve ser feita por <strong>profissional habilitado (CREA)</strong></li>
-                </ul>
+  <!-- Features Section -->
+  <section id="funcionalidades" class="bg-white py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-5xl font-black text-gray-900 mb-6">Funcionalidades</h2>
+        <p class="text-2xl text-gray-600">Tudo que você precisa em um só lugar</p>
+      </div>
 
-                <h3>4. USO DOS DADOS</h3>
-                <ul>
-                  <li>✅ Dados salvos <strong>apenas localmente</strong> (seu navegador)</li>
-                  <li>✅ <strong>Não coletamos</strong> ou armazenamos informações</li>
-                  <li>✅ 100% <strong>LGPD compliant</strong></li>
-                </ul>
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="group bg-gradient-to-br from-blue-500 to-blue-700 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-6xl mb-4">🤖</div>
+          <h3 class="text-2xl font-bold text-white mb-3">Machine Learning</h3>
+          <p class="text-blue-100">
+            Previsão inteligente de custos baseada em 50+ projetos reais das principais bacias brasileiras
+          </p>
+        </div>
 
-                <h3>5. GARANTIAS E LIMITAÇÕES</h3>
-                <ul>
-                  <li>Sistema fornecido <strong>"AS IS"</strong> (como está)</li>
-                  <li>Benchmarks baseados em fontes públicas confiáveis (Wood Mackenzie, Rystad Energy, Petrobras)</li>
-                  <li>Não garantimos precisão absoluta dos cálculos</li>
-                  <li>Usuário deve realizar <strong>due diligence</strong> própria</li>
-                </ul>
+        <!-- Feature 2 -->
+        <div class="group bg-gradient-to-br from-green-500 to-green-700 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-6xl mb-4">📋</div>
+          <h3 class="text-2xl font-bold text-white mb-3">ANP 817/2020</h3>
+          <p class="text-green-100">
+            Interface guiada em 8 passos cobrindo 100% dos requisitos regulatórios da ANP
+          </p>
+        </div>
 
-                <h3>6. SUPORTE E FEEDBACK</h3>
-                <ul>
-                  <li>📱 WhatsApp: (21) 96446-2281</li>
-                  <li>💬 Use o botão flutuante de WhatsApp para dúvidas ou sugestões</li>
-                </ul>
+        <!-- Feature 3 -->
+        <div class="group bg-gradient-to-br from-purple-500 to-purple-700 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-6xl mb-4">📊</div>
+          <h3 class="text-2xl font-bold text-white mb-3">Relatórios PDF</h3>
+          <p class="text-purple-100">
+            Geração automática de relatórios profissionais com gráficos, cronogramas e análises
+          </p>
+        </div>
 
-                <div className="disclaimer-checkbox">
-                  <input
-                    type="checkbox"
-                    id="accept-terms"
-                    checked={disclaimerAccepted}
-                    onChange={(e) => setDisclaimerAccepted(e.target.checked)}
-                  />
-                  <label htmlFor="accept-terms">
-                    Li e concordo com os Termos de Uso acima
-                  </label>
-                </div>
+        <!-- Feature 4 -->
+        <div class="group bg-gradient-to-br from-yellow-500 to-orange-500 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-6xl mb-4">🔒</div>
+          <h3 class="text-2xl font-bold text-white mb-3">LGPD 100%</h3>
+          <p class="text-yellow-100">
+            Proteção total de dados conforme Lei 13.709/2018 com criptografia e direito ao esquecimento
+          </p>
+        </div>
 
-                <button
-                  className="disclaimer-button"
-                  disabled={!disclaimerAccepted}
-                  onClick={handleAcceptDisclaimer}
-                >
-                  {disclaimerAccepted ? 'Continuar para o Sistema' : 'Marque a caixa acima para continuar'}
-                </button>
-              </div>
+        <!-- Feature 5 -->
+        <div class="group bg-gradient-to-br from-red-500 to-red-700 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-6xl mb-4">⚡</div>
+          <h3 class="text-2xl font-bold text-white mb-3">Cloud-Based</h3>
+          <p class="text-red-100">
+            Acesse de qualquer lugar, qualquer dispositivo. Deploy em Railway + Vercel (99.9% uptime)
+          </p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="group bg-gradient-to-br from-teal-500 to-teal-700 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition transform hover:-translate-y-2">
+          <div class="text-6xl mb-4">💾</div>
+          <h3 class="text-2xl font-bold text-white mb-3">Banco PostgreSQL</h3>
+          <p class="text-teal-100">
+            Histórico completo de projetos, análises comparativas e benchmarking automático
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LGPD Section -->
+  <section id="lgpd" class="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-5xl font-black mb-6">🔒 100% LGPD Compliant</h2>
+        <p class="text-2xl text-blue-200">
+          Proteção total dos seus dados conforme Lei nº 13.709/2018
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 mb-12">
+        <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border-2 border-white/20">
+          <div class="text-5xl mb-4">🛡️</div>
+          <h3 class="text-2xl font-bold mb-3">Criptografia Total</h3>
+          <p class="text-blue-100">
+            HTTPS/TLS 1.3 em trânsito + AES-256 em repouso. Seus dados 100% protegidos.
+          </p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border-2 border-white/20">
+          <div class="text-5xl mb-4">🗑️</div>
+          <h3 class="text-2xl font-bold mb-3">Direito ao Esquecimento</h3>
+          <p class="text-blue-100">
+            Solicite exclusão permanente de todos os seus dados a qualquer momento.
+          </p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border-2 border-white/20">
+          <div class="text-5xl mb-4">📊</div>
+          <h3 class="text-2xl font-bold mb-3">Transparência Total</h3>
+          <p class="text-blue-100">
+            Acesse, exporte e controle todos os seus dados armazenados.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-white/20 backdrop-blur-lg p-10 rounded-2xl border-2 border-white/30 text-center">
+        <h3 class="text-3xl font-bold mb-4">📧 Contato DPO</h3>
+        <p class="text-xl text-blue-100 mb-2">
+          Para exercer seus direitos (acesso, correção, exclusão, portabilidade):
+        </p>
+        <p class="text-2xl font-bold">
+          <a href="mailto:lgpd@neptunodescom.com" class="text-yellow-300 hover:text-yellow-200 transition">
+            lgpd@neptunodescom.com
+          </a>
+        </p>
+        <p class="text-sm text-blue-200 mt-2">Resposta em até 15 dias úteis</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trial Form Section -->
+  <section id="trial" class="bg-gradient-to-br from-gray-50 to-white py-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-5xl font-black text-gray-900 mb-6">
+          🚀 Teste Grátis por 72 Horas
+        </h2>
+        <p class="text-2xl text-gray-600 mb-4">
+          Receba seu código de acesso por email em até 2 minutos
+        </p>
+        <div class="flex justify-center space-x-6 text-lg text-gray-600">
+          <span class="flex items-center space-x-2">
+            <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Sem cartão</span>
+          </span>
+          <span class="flex items-center space-x-2">
+            <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Acesso imediato</span>
+          </span>
+          <span class="flex items-center space-x-2">
+            <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+            <span>Suporte incluso</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="bg-white p-10 rounded-3xl shadow-2xl border-4 border-blue-100">
+        <form id="trialForm" class="space-y-6">
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block text-sm font-bold text-gray-700 mb-2">Nome Completo *</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+                placeholder="João da Silva"
+              >
             </div>
-          )}
 
-          {/* WhatsApp Floating Button */}
-          <a
-            href="https://wa.me/5521964462281?text=Olá!%20Estou%20usando%20o%20NEPTUNO%20e%20gostaria%20de%20tirar%20uma%20dúvida."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="whatsapp-float"
-            title="Fale conosco no WhatsApp"
+            <div>
+              <label for="email" class="block text-sm font-bold text-gray-700 mb-2">Email Profissional *</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+                placeholder="joao@empresa.com.br"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label for="company" class="block text-sm font-bold text-gray-700 mb-2">Empresa / Instituição *</label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              required
+              class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+              placeholder="Petróleo Brasileiro S.A."
+            >
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="position" class="block text-sm font-bold text-gray-700 mb-2">Cargo</label>
+              <input
+                type="text"
+                id="position"
+                name="position"
+                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+                placeholder="Engenheiro de Petróleo"
+              >
+            </div>
+
+            <div>
+              <label for="phone" class="block text-sm font-bold text-gray-700 mb-2">Telefone</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition"
+                placeholder="(21) 99999-9999"
+              >
+            </div>
+          </div>
+
+          <div class="bg-blue-50 p-6 rounded-xl border-2 border-blue-200">
+            <div class="flex items-start space-x-3">
+              <input
+                type="checkbox"
+                id="lgpd"
+                name="lgpd"
+                required
+                class="mt-1 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+              >
+              <label for="lgpd" class="text-sm text-gray-700">
+                <span class="font-bold">Aceito os termos de uso e política de privacidade (LGPD)</span><br>
+                <span class="text-xs text-gray-500">
+                  Seus dados serão utilizados apenas para fornecer acesso ao sistema e enviar informações relacionadas.
+                  Você pode solicitar exclusão a qualquer momento conforme Lei nº 13.709/2018.
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-gradient-to-r from-yellow-500 via-orange-500 to-orange-600 text-white py-5 px-6 rounded-xl text-xl font-black hover:from-yellow-600 hover:to-orange-700 transition shadow-2xl transform hover:scale-105"
           >
-            <span className="whatsapp-tooltip">💬 Feedback ou Dúvidas?</span>
-            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-              <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.957 0-7.384 6.083-13.467 13.467-13.467s13.467 6.083 13.467 13.467c0 7.384-6.083 13.467-13.467 13.467zM21.9 18.367c-0.292-0.146-1.73-0.854-2-0.951-0.271-0.098-0.469-0.146-0.666 0.146s-0.764 0.951-0.937 1.146c-0.173 0.195-0.346 0.22-0.638 0.073-0.292-0.146-1.232-0.454-2.346-1.446-0.867-0.772-1.453-1.725-1.624-2.017s-0.018-0.451 0.128-0.596c0.131-0.131 0.292-0.342 0.438-0.513s0.195-0.293 0.293-0.488c0.098-0.195 0.049-0.366-0.024-0.513s-0.666-1.604-0.913-2.197c-0.242-0.579-0.487-0.501-0.666-0.51-0.173-0.008-0.371-0.010-0.568-0.010s-0.52 0.073-0.791 0.366c-0.271 0.293-1.034 1.010-1.034 2.465s1.058 2.857 1.205 3.054c0.146 0.195 2.048 3.126 4.964 4.383 0.694 0.299 1.235 0.478 1.658 0.612 0.697 0.22 1.332 0.189 1.833 0.115 0.559-0.083 1.73-0.708 1.974-1.391s0.244-1.269 0.171-1.391c-0.073-0.122-0.271-0.195-0.568-0.342z"/>
+            🚀 Solicitar Código de Acesso Grátis
+          </button>
+
+          <p class="text-center text-sm text-gray-500">
+            Você receberá um email com seu código de acesso em até 2 minutos
+          </p>
+        </form>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden mt-8 bg-green-100 border-4 border-green-500 text-green-900 p-8 rounded-xl">
+          <div class="flex items-center space-x-3 mb-4">
+            <span class="text-5xl">✅</span>
+            <h3 class="text-3xl font-bold">Solicitação Enviada!</h3>
+          </div>
+          <p class="text-lg mb-3">
+            Código de acesso enviado para <span id="emailSent" class="font-bold"></span>
+          </p>
+          <p class="text-sm mb-4">
+            Verifique sua caixa de entrada (e spam). Seu trial de 72h começa assim que você inserir o código.
+          </p>
+          <a href="https://www.neptunodescom.com" class="inline-block bg-green-600 text-white px-8 py-4 rounded-xl hover:bg-green-700 transition font-bold text-lg shadow-lg">
+            Acessar Sistema →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-300 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-12 mb-12">
+
+        <div>
+          <img src="NEPTUNO_LOGO.png" alt="NEPTUNO" class="h-16 mb-6 filter brightness-0 invert">
+          <p class="text-sm text-gray-400">
+            Sistema profissional de PDI conforme ANP 817/2020
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-4 text-lg">Produto</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#funcionalidades" class="hover:text-white transition">Funcionalidades</a></li>
+            <li><a href="#trial" class="hover:text-white transition">Teste Grátis</a></li>
+            <li><a href="https://www.neptunodescom.com" class="hover:text-white transition">Acessar Sistema</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-4 text-lg">Legal</h4>
+          <ul class="space-y-3 text-sm">
+            <li><a href="#lgpd" class="hover:text-white transition">Política de Privacidade</a></li>
+            <li><a href="#lgpd" class="hover:text-white transition">Termos de Uso</a></li>
+            <li><a href="#lgpd" class="hover:text-white transition">LGPD</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-4 text-lg">Contato</h4>
+          <ul class="space-y-3 text-sm">
+            <li>📧 contato@neptunodescom.com</li>
+            <li>🔒 lgpd@neptunodescom.com</li>
+            <li>🌐 www.neptunodescom.com</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-sm text-center md:text-left mb-4 md:mb-0">
+          © 2025 NEPTUNO - Todos os direitos reservados
+        </p>
+        <p class="text-sm flex items-center space-x-2">
+          <span>Desenvolvido por</span>
+          <span class="font-bold text-white">👷 Eng. Tadeu Santana</span>
+          <a href="https://linkedin.com/in/tadeusantana" target="_blank" class="text-blue-400 hover:text-blue-300 transition">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
             </svg>
           </a>
-          {/* Header */}
-          <header className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b sticky top-0 z-40 shadow-sm`}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center justify-between h-20">
-                {/* Logo and Title */}
-                <div className="flex items-center space-x-4">
-                  <img src="./branding/NEPTUNO_LOGO.png" alt="NEPTUNO" style={{height: '50px'}} />
-                </div>
+        </p>
+      </div>
+    </div>
+  </footer>
 
-                {/* Dark Mode Toggle */}
-                <button
-                  onClick={() => setDarkMode(!darkMode)}
-                  className={`p-3 rounded-lg transition-all ${
-                    darkMode
-                      ? 'bg-gray-700 hover:bg-gray-600 text-yellow-400'
-                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                  }`}
-                  title={darkMode ? 'Modo Claro' : 'Modo Escuro'}
-                >
-                  <span className="text-2xl">{darkMode ? '☀️' : '🌙'}</span>
-                </button>
-              </div>
-            </div>
-          </header>
-
-          {/* Main Content */}
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {PDIComponent && <PDIComponent darkMode={darkMode} />}
-          </main>
-
-          {/* Footer */}
-          <footer className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-t mt-16`}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-              <div className="text-center">
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'}`}>
-                  NEPTUNO © 2025 | Sistema Profissional de Plano de Desativação
-                </p>
-                <p className={`text-xs mt-2 ${darkMode ? 'text-gray-500' : 'text-gray-500'}`}>
-                  Conforme Resolução ANP 817/2020 | Versão 2.1
-                </p>
-                <button
-                  onClick={() => setShowDisclaimer(true)}
-                  className={`text-xs mt-2 underline ${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                  Ver Termos de Uso
-                </button>
-              </div>
-            </div>
-          </footer>
-        </div>
-      );
-    }
-
-    // Render App
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-
-    // Hide loading screen after 3 seconds
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        const loadingScreen = document.getElementById('loading-screen');
-        if (loadingScreen) {
-          loadingScreen.style.opacity = '0';
-          setTimeout(() => {
-            loadingScreen.style.display = 'none';
-          }, 500); // Wait for fade transition
+  <!-- JavaScript -->
+  <script>
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }, 3000); // 3 seconds as requested
+      });
+    });
+
+    // Form submission
+    const API_URL = 'https://aware-comfort-production.up.railway.app';
+
+    document.getElementById('trialForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        company: document.getElementById('company').value,
+        position: document.getElementById('position').value,
+        phone: document.getElementById('phone').value,
+        lgpd: document.getElementById('lgpd').checked,
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        const response = await fetch(`${API_URL}/api/trial/request`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          document.getElementById('trialForm').classList.add('hidden');
+          document.getElementById('successMessage').classList.remove('hidden');
+          document.getElementById('emailSent').textContent = formData.email;
+
+          // Scroll to success message
+          document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+        } else {
+          alert('Erro ao enviar solicitação: ' + (result.error || 'Tente novamente'));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Erro ao conectar com servidor. Verifique sua conexão e tente novamente.');
+      }
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('shadow-lg');
+      } else {
+        nav.classList.remove('shadow-lg');
+      }
     });
   </script>
+
 </body>
 </html>
