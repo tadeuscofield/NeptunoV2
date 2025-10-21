@@ -12,9 +12,18 @@ import os
 from datetime import datetime, timedelta
 import secrets
 import string
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 CORS(app)
+
+# Email Configuration (Zoho SMTP)
+ZOHO_SMTP_HOST = 'smtp.zoho.com'
+ZOHO_SMTP_PORT = 587
+ZOHO_EMAIL = 'contato@neptunodescom.com'
+ZOHO_PASSWORD = os.environ.get('ZOHO_APP_PASSWORD', 'r6nP2ziAFX1i')
 
 # PostgreSQL (Railway auto-configura DATABASE_URL)
 DATABASE_URL = os.environ.get('DATABASE_URL')
@@ -208,6 +217,110 @@ def stats():
         return jsonify({'error': str(e)}), 500
 
 # ==========================================
+# EMAIL FUNCTIONS
+# ==========================================
+
+def send_welcome_email(to_email, name, access_code):
+    """Envia email de boas-vindas com código de acesso"""
+    try:
+        # Create message
+        msg = MIMEMultipart('alternative')
+        msg['From'] = f'NEPTUNO <{ZOHO_EMAIL}>'
+        msg['To'] = to_email
+        msg['Subject'] = f'🔱 Seu código de acesso trial NEPTUNO - {access_code}'
+
+        # HTML email body
+        html_body = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <style>
+                body {{ font-family: Arial, sans-serif; line-height: 1.6; color: #333; }}
+                .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+                .header {{ background: linear-gradient(135deg, #0a1929 0%, #1a365d 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }}
+                .content {{ background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }}
+                .code-box {{ background: white; border: 3px dashed #2563eb; padding: 20px; margin: 20px 0; text-align: center; border-radius: 8px; }}
+                .code {{ font-size: 32px; font-weight: bold; color: #1a365d; letter-spacing: 2px; }}
+                .button {{ display: inline-block; background: #2563eb; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; margin: 20px 0; font-weight: bold; }}
+                .footer {{ text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 14px; }}
+                .highlight {{ background: #dbeafe; padding: 15px; border-left: 4px solid #2563eb; margin: 15px 0; border-radius: 4px; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1 style="margin: 0; font-size: 36px;">🔱 NEPTUNO</h1>
+                    <p style="margin: 10px 0 0 0; opacity: 0.9;">Sistema Profissional de Plano de Desativação</p>
+                </div>
+
+                <div class="content">
+                    <h2 style="color: #1a365d;">Olá, {name}! 👋</h2>
+
+                    <p>Bem-vindo ao <strong>NEPTUNO</strong>! Seu trial de <strong>72 horas</strong> foi aprovado.</p>
+
+                    <div class="code-box">
+                        <p style="margin: 0 0 10px 0; color: #666;">Seu Código de Acesso:</p>
+                        <div class="code">{access_code}</div>
+                    </div>
+
+                    <div class="highlight">
+                        <strong>✅ O que você pode fazer agora:</strong>
+                        <ul style="margin: 10px 0;">
+                            <li>Gerar PDIs completos com ML</li>
+                            <li>Exportar relatórios profissionais em PDF</li>
+                            <li>Acessar cálculos de custos automáticos</li>
+                            <li>Conforme ANP 817/2020</li>
+                        </ul>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <a href="https://neptunodescom.com/app" class="button">🚀 Acessar Sistema</a>
+                    </div>
+
+                    <div class="highlight">
+                        <strong>📋 Como usar:</strong>
+                        <ol style="margin: 10px 0;">
+                            <li>Acesse <a href="https://neptunodescom.com/app">neptunodescom.com/app</a></li>
+                            <li>Insira seu código: <strong>{access_code}</strong></li>
+                            <li>Comece a gerar seus PDIs profissionais</li>
+                        </ol>
+                    </div>
+
+                    <p style="margin-top: 20px;"><strong>⏰ Seu trial expira em 72 horas</strong></p>
+                    <p style="color: #666; font-size: 14px;">Aproveite ao máximo para testar todas as funcionalidades!</p>
+                </div>
+
+                <div class="footer">
+                    <p><strong>NEPTUNO</strong> - Sistema Profissional de PDI Offshore</p>
+                    <p>🌐 <a href="https://neptunodescom.com">neptunodescom.com</a></p>
+                    <p>📧 <a href="mailto:contato@neptunodescom.com">contato@neptunodescom.com</a></p>
+                    <p style="margin-top: 15px; font-size: 12px; color: #999;">
+                        Desenvolvido por <strong>Eng. Tadeu Santana</strong><br>
+                        100% LGPD Compliant | Conforme ANP 817/2020
+                    </p>
+                </div>
+            </div>
+        </body>
+        </html>
+        """
+
+        # Attach HTML
+        msg.attach(MIMEText(html_body, 'html'))
+
+        # Send email
+        with smtplib.SMTP(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT) as server:
+            server.starttls()
+            server.login(ZOHO_EMAIL, ZOHO_PASSWORD)
+            server.send_message(msg)
+
+        return True
+
+    except Exception as e:
+        print(f"Erro ao enviar email: {str(e)}")
+        return False
+
+# ==========================================
 # TRIAL ENDPOINTS
 # ==========================================
 
@@ -250,13 +363,14 @@ def request_trial():
         db.session.add(trial_user)
         db.session.commit()
 
-        # TODO: Enviar email com código (integrar SendGrid/Resend)
-        # send_trial_email(trial_user.email, access_code)
+        # Enviar email com código de acesso
+        email_sent = send_welcome_email(trial_user.email, trial_user.name, access_code)
 
         return jsonify({
-            'message': 'Trial solicitado com sucesso',
-            'access_code': access_code,  # Em produção, remover isso (só enviar por email)
-            'email': trial_user.email
+            'message': 'Trial solicitado com sucesso! Verifique seu email.',
+            'email': trial_user.email,
+            'email_sent': email_sent,
+            'access_code': access_code  # REMOVER EM PRODUÇÃO (apenas para teste)
         }), 201
 
     except Exception as e:
