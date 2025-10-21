@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code NEPTUNO</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #0a1929 0%, #1a365d 100%);
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 500px;
+    }
+
+    h1 {
+      color: #1a365d;
+      margin-bottom: 10px;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    #qrcode {
+      display: inline-block;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .url {
+      color: #2563eb;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+      word-break: break-all;
+    }
+
+    .instructions {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f0f9ff;
+      border-radius: 10px;
+      border-left: 4px solid #2563eb;
+    }
+
+    .instructions h3 {
+      margin-top: 0;
+      color: #1a365d;
+    }
+
+    .instructions ol {
+      text-align: left;
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .instructions li {
+      margin: 10px 0;
+      color: #444;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .print-only {
+      display: none;
+    }
+
+    @media print {
+      body {
+        background: white;
+      }
+
+      .container {
+        box-shadow: none;
+        page-break-inside: avoid;
+      }
+
+      button {
+        display: none;
+      }
+
+      .print-only {
+        display: block;
+        margin-top: 30px;
+        padding: 20px;
+        border: 2px dashed #2563eb;
+        border-radius: 10px;
+      }
+
+      .print-only p {
+        margin: 5px 0;
+        color: #1a365d;
+        font-weight: bold;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔱 NEPTUNO</h1>
+    <p class="subtitle">Sistema Profissional de PDI Offshore</p>
+
+    <div id="qrcode"></div>
+
+    <p class="url">neptunodescom.com</p>
+
+    <div class="instructions">
+      <h3>📱 Como usar:</h3>
+      <ol>
+        <li>Aponte a câmera do celular para o QR Code</li>
+        <li>Toque na notificação que aparecer</li>
+        <li>Preencha o formulário de trial gratuito</li>
+        <li>Receba seu código de acesso por email</li>
+        <li>Teste grátis por 72 horas!</li>
+      </ol>
+    </div>
+
+    <button onclick="window.print()">🖨️ Imprimir QR Code</button>
+
+    <div class="print-only">
+      <p>✅ Trial grátis 72 horas</p>
+      <p>✅ 100% LGPD Compliant</p>
+      <p>✅ Conforme ANP 817/2020</p>
+      <p>📧 Contato: Eng. Tadeu Santana</p>
+    </div>
+  </div>
+
+  <!-- QR Code Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+    // Generate QR Code
+    new QRCode(document.getElementById("qrcode"), {
+      text: "https://neptunodescom.com",
+      width: 256,
+      height: 256,
+      colorDark: "#1a365d",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  </script>
+</body>
+</html>

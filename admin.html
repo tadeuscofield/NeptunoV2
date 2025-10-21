@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NEPTUNO - Painel Admin</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
   <link rel="icon" type="image/png" href="./branding/NEPTUNO_LOGO.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -87,13 +97,14 @@
           </div>
         </div>
 
-        <div class="bg-green-50 p-6 rounded-xl shadow">
+        <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl shadow-lg border-2 border-green-300">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm text-green-700">Ativos</p>
-              <p class="text-3xl font-bold text-green-900" id="activeTrials">0</p>
+              <p class="text-sm text-green-700 font-bold">🔥 Trials Ativos</p>
+              <p class="text-4xl font-black text-green-900" id="activeTrials">0</p>
+              <p class="text-xs text-green-600 mt-1">Usando o sistema agora</p>
             </div>
-            <div class="text-4xl">✅</div>
+            <div class="text-5xl animate-pulse">✅</div>
           </div>
         </div>
 
