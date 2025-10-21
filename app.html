@@ -713,6 +713,19 @@
       errorDiv.classList.add('hidden');
       trialInfo.classList.add('hidden');
 
+      // Master developer access (vitalício)
+      if (accessCode === 'NEPT-MASTER-2025') {
+        localStorage.setItem(TRIAL_STORAGE_KEY, accessCode);
+        localStorage.setItem(TRIAL_EXPIRY_KEY, '2099-12-31T23:59:59Z');
+        trialInfo.classList.remove('hidden');
+        expiresInfo.textContent = '✅ Acesso Vitalício - Desenvolvedor';
+        setTimeout(() => {
+          document.getElementById('loginCard').classList.add('hidden');
+          document.getElementById('app').classList.remove('hidden');
+        }, 1500);
+        return;
+      }
+
       try {
         // Activate trial
         const response = await fetch(`${API_URL}/api/trial/activate`, {
