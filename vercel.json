@@ -1,12 +1,7 @@
 {
-  "routes": [
-    {
-      "src": "/app",
-      "dest": "/app.html"
-    },
-    {
-      "src": "/admin",
-      "dest": "/admin.html"
-    }
-  ]
+  "rewrites": [
+    { "source": "/app", "destination": "/app.html" },
+    { "source": "/admin", "destination": "/admin.html" }
+  ],
+  "cleanUrls": true
 }
