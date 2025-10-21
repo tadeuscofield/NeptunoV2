@@ -223,6 +223,8 @@ def stats():
 def send_welcome_email(to_email, name, access_code):
     """Envia email de boas-vindas com código de acesso"""
     try:
+        print(f"[EMAIL] Iniciando envio para {to_email}")
+
         # Create message
         msg = MIMEMultipart('alternative')
         msg['From'] = f'NEPTUNO <{ZOHO_EMAIL}>'
@@ -308,16 +310,23 @@ def send_welcome_email(to_email, name, access_code):
         # Attach HTML
         msg.attach(MIMEText(html_body, 'html'))
 
-        # Send email
-        with smtplib.SMTP(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT) as server:
+        # Send email with timeout
+        print(f"[EMAIL] Conectando ao SMTP {ZOHO_SMTP_HOST}:{ZOHO_SMTP_PORT}")
+        with smtplib.SMTP(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT, timeout=10) as server:
+            print(f"[EMAIL] Iniciando TLS")
             server.starttls()
+            print(f"[EMAIL] Fazendo login como {ZOHO_EMAIL}")
             server.login(ZOHO_EMAIL, ZOHO_PASSWORD)
+            print(f"[EMAIL] Enviando mensagem")
             server.send_message(msg)
+            print(f"[EMAIL] Email enviado com sucesso para {to_email}")
 
         return True
 
     except Exception as e:
-        print(f"Erro ao enviar email: {str(e)}")
+        print(f"[EMAIL] ERRO ao enviar email: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return False
 
 # ==========================================
