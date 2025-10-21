@@ -21,7 +21,7 @@ CORS(app)
 
 # Email Configuration (Zoho SMTP)
 ZOHO_SMTP_HOST = 'smtp.zoho.com'
-ZOHO_SMTP_PORT = 587
+ZOHO_SMTP_PORT = 465  # SSL port (works better on Railway than 587 TLS)
 ZOHO_EMAIL = 'contato@neptunodescom.com'
 ZOHO_PASSWORD = os.environ.get('ZOHO_APP_PASSWORD', 'r6nP2ziAFX1i')
 
@@ -310,11 +310,9 @@ def send_welcome_email(to_email, name, access_code):
         # Attach HTML
         msg.attach(MIMEText(html_body, 'html'))
 
-        # Send email with timeout
-        print(f"[EMAIL] Conectando ao SMTP {ZOHO_SMTP_HOST}:{ZOHO_SMTP_PORT}")
-        with smtplib.SMTP(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT, timeout=10) as server:
-            print(f"[EMAIL] Iniciando TLS")
-            server.starttls()
+        # Send email with SSL (port 465)
+        print(f"[EMAIL] Conectando ao SMTP SSL {ZOHO_SMTP_HOST}:{ZOHO_SMTP_PORT}")
+        with smtplib.SMTP_SSL(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT, timeout=15) as server:
             print(f"[EMAIL] Fazendo login como {ZOHO_EMAIL}")
             server.login(ZOHO_EMAIL, ZOHO_PASSWORD)
             print(f"[EMAIL] Enviando mensagem")
