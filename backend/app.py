@@ -20,7 +20,7 @@ CORS(app)
 # Email Configuration (Resend API - works on Railway)
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
 resend.api_key = RESEND_API_KEY
-FROM_EMAIL = 'NEPTUNO <onboarding@resend.dev>'  # Usar domínio verificado depois
+FROM_EMAIL = 'NEPTUNO <contato@neptunodescom.com>'  # Domínio verificado
 
 # PostgreSQL (Railway auto-configura DATABASE_URL)
 DATABASE_URL = os.environ.get('DATABASE_URL')
