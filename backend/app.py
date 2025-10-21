@@ -12,18 +12,15 @@ import os
 from datetime import datetime, timedelta
 import secrets
 import string
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import resend
 
 app = Flask(__name__)
 CORS(app)
 
-# Email Configuration (Zoho SMTP)
-ZOHO_SMTP_HOST = 'smtp.zoho.com'
-ZOHO_SMTP_PORT = 465  # SSL port (works better on Railway than 587 TLS)
-ZOHO_EMAIL = 'contato@neptunodescom.com'
-ZOHO_PASSWORD = os.environ.get('ZOHO_APP_PASSWORD', 'r6nP2ziAFX1i')
+# Email Configuration (Resend API - works on Railway)
+RESEND_API_KEY = os.environ.get('RESEND_API_KEY', '')
+resend.api_key = RESEND_API_KEY
+FROM_EMAIL = 'NEPTUNO <onboarding@resend.dev>'  # Usar domínio verificado depois
 
 # PostgreSQL (Railway auto-configura DATABASE_URL)
 DATABASE_URL = os.environ.get('DATABASE_URL')
@@ -221,15 +218,9 @@ def stats():
 # ==========================================
 
 def send_welcome_email(to_email, name, access_code):
-    """Envia email de boas-vindas com código de acesso"""
+    """Envia email de boas-vindas com código de acesso via Resend API"""
     try:
-        print(f"[EMAIL] Iniciando envio para {to_email}")
-
-        # Create message
-        msg = MIMEMultipart('alternative')
-        msg['From'] = f'NEPTUNO <{ZOHO_EMAIL}>'
-        msg['To'] = to_email
-        msg['Subject'] = f'🔱 Seu código de acesso trial NEPTUNO - {access_code}'
+        print(f"[EMAIL] Iniciando envio via Resend para {to_email}")
 
         # HTML email body
         html_body = f"""
@@ -307,17 +298,17 @@ def send_welcome_email(to_email, name, access_code):
         </html>
         """
 
-        # Attach HTML
-        msg.attach(MIMEText(html_body, 'html'))
+        # Send email via Resend API
+        print(f"[EMAIL] Enviando via Resend API...")
+        params = {
+            "from": FROM_EMAIL,
+            "to": [to_email],
+            "subject": f"🔱 Seu código de acesso trial NEPTUNO - {access_code}",
+            "html": html_body
+        }
 
-        # Send email with SSL (port 465)
-        print(f"[EMAIL] Conectando ao SMTP SSL {ZOHO_SMTP_HOST}:{ZOHO_SMTP_PORT}")
-        with smtplib.SMTP_SSL(ZOHO_SMTP_HOST, ZOHO_SMTP_PORT, timeout=15) as server:
-            print(f"[EMAIL] Fazendo login como {ZOHO_EMAIL}")
-            server.login(ZOHO_EMAIL, ZOHO_PASSWORD)
-            print(f"[EMAIL] Enviando mensagem")
-            server.send_message(msg)
-            print(f"[EMAIL] Email enviado com sucesso para {to_email}")
+        response = resend.Emails.send(params)
+        print(f"[EMAIL] Email enviado com sucesso! ID: {response.get('id', 'N/A')}")
 
         return True
 
