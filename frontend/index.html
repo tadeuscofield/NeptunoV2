@@ -273,15 +273,18 @@
 
           <!-- Request Success Message -->
           <div id="requestSuccess" class="hidden mt-6 bg-green-100 border-4 border-green-500 text-green-900 p-6 rounded-xl">
-            <div class="flex items-center space-x-2 mb-2">
+            <div class="flex items-center space-x-2 mb-3">
               <span class="text-3xl">✅</span>
-              <h3 class="text-2xl font-bold">Solicitação Enviada!</h3>
+              <h3 class="text-2xl font-bold">Código Gerado com Sucesso!</h3>
             </div>
             <p class="text-sm mb-2">
-              Sua solicitação foi enviada para <strong>contato@neptunodescom.com</strong>
+              <strong>Verifique sua caixa de entrada</strong> - enviamos seu código de acesso por email.
             </p>
-            <p class="text-sm">
-              Nossa equipe irá analisar e enviar seu código de acesso em breve.
+            <p class="text-sm mb-3">
+              Não esquece de verificar a pasta de <strong>SPAM</strong> caso não encontre.
+            </p>
+            <p class="text-xs text-green-700 bg-green-50 p-2 rounded">
+              💡 Seu trial de 72 horas começa assim que você inserir o código na aba "Tenho Código"
             </p>
           </div>
 
@@ -359,7 +362,7 @@
       window.location.href = `/app?code=${accessCode}`;
     });
 
-    // Request Code Form Handler
+    // Request Code Form Handler - AUTOMATIC VIA RAILWAY API
     document.getElementById('requestForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
@@ -367,51 +370,57 @@
         name: document.getElementById('reqName').value,
         email: document.getElementById('reqEmail').value,
         company: document.getElementById('reqCompany').value,
-        position: document.getElementById('reqPosition').value || 'Não informado',
-        phone: document.getElementById('reqPhone').value || 'Não informado',
+        position: document.getElementById('reqPosition').value || '',
+        phone: document.getElementById('reqPhone').value || '',
         lgpd: document.getElementById('reqLgpd').checked
       };
 
       const successDiv = document.getElementById('requestSuccess');
       const errorDiv = document.getElementById('requestError');
       const errorMsg = document.getElementById('requestErrorMsg');
+      const submitBtn = e.target.querySelector('button[type="submit"]');
 
       // Hide previous messages
       successDiv.classList.add('hidden');
       errorDiv.classList.add('hidden');
 
-      // Create email body
-      const emailSubject = encodeURIComponent(`[NEPTUNO] Solicitação de Código de Trial - ${formData.name}`);
-      const emailBody = encodeURIComponent(`
-SOLICITAÇÃO DE CÓDIGO DE TRIAL - NEPTUNO
+      // Disable button and show loading
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '⏳ Gerando código...';
 
-Nome: ${formData.name}
-Email: ${formData.email}
-Empresa: ${formData.company}
-Cargo: ${formData.position}
-Telefone: ${formData.phone}
-
-LGPD Aceito: ${formData.lgpd ? 'Sim' : 'Não'}
-
----
-Data/Hora: ${new Date().toLocaleString('pt-BR')}
-Formulário: Página Principal NEPTUNO
-      `);
-
-      const mailtoLink = `mailto:contato@neptunodescom.com?subject=${emailSubject}&body=${emailBody}`;
-
-      // Open email client
       try {
-        window.location.href = mailtoLink;
+        // Call Railway API to generate trial code
+        const response = await fetch('https://aware-comfort-production.up.railway.app/api/trial/request', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
 
-        // Show success message
-        setTimeout(() => {
+        const result = await response.json();
+
+        if (response.ok && result.access_code) {
+          // Success - show message with code
           successDiv.classList.remove('hidden');
           document.getElementById('requestForm').reset();
-        }, 500);
+
+          // Scroll to success message
+          successDiv.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          // Error from API
+          errorMsg.textContent = result.error || 'Erro ao processar solicitação. Tente novamente.';
+          errorDiv.classList.remove('hidden');
+        }
       } catch (error) {
-        errorMsg.textContent = 'Erro ao abrir cliente de email. Por favor, envie para: contato@neptunodescom.com';
+        // Network or other error
+        console.error('Error:', error);
+        errorMsg.textContent = 'Erro de conexão. Verifique sua internet e tente novamente.';
         errorDiv.classList.remove('hidden');
+      } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '📧 Enviar Solicitação';
       }
     });
 
