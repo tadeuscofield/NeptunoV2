@@ -535,9 +535,30 @@ def delete_trial(trial_id):
 # INICIALIZAÇÃO
 # ==========================================
 
-# Criar tabelas
-with app.app_context():
-    db.create_all()
+# Criar tabelas com tratamento de erro
+def init_db():
+    """Inicializa banco de dados de forma segura"""
+    try:
+        with app.app_context():
+            db.create_all()
+            print("[DB] ✅ Database tables created successfully")
+    except Exception as e:
+        print(f"[DB] ⚠️ Could not create tables (will retry on first request): {str(e)}")
+        # Não crashar o app se o banco não estiver pronto
+
+# Tentar inicializar o banco (não crítico)
+init_db()
+
+# Hook para criar tabelas no primeiro request se não existirem
+@app.before_request
+def ensure_db_tables():
+    """Garante que tabelas existam antes do primeiro request"""
+    if not hasattr(app, 'db_initialized'):
+        try:
+            db.create_all()
+            app.db_initialized = True
+        except:
+            pass  # Será tentado no próximo request
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
